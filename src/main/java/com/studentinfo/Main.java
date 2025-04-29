@@ -39,32 +39,32 @@ import com.studentinfo.model.Student;
 import com.studentinfo.service.DatabaseService;
 import com.studentinfo.service.MongoDBService;
 
+// Main application class that handles the GUI and database interactions
 public class Main {
     private static DatabaseService dbService;
     private static JFrame mainFrame;
     private static JTable studentTable;
     private static DefaultTableModel studentTableModel;
     
-    // Color scheme
-    private static final Color PRIMARY_COLOR = new Color(0, 32, 91); // Navy blue
-    private static final Color SECONDARY_COLOR = new Color(0, 48, 135); // Lighter navy blue
-    private static final Color BACKGROUND_COLOR = new Color(240, 240, 245); // Light gray-blue
-    private static final Color TEXT_COLOR = new Color(255, 255, 255); // White
+    // Application color scheme for consistent UI styling
+    private static final Color PRIMARY_COLOR = new Color(0, 32, 91);
+    private static final Color SECONDARY_COLOR = new Color(0, 48, 135);
+    private static final Color BACKGROUND_COLOR = new Color(240, 240, 245);
+    private static final Color TEXT_COLOR = new Color(255, 255, 255);
     private static final Color ACCENT_COLOR = new Color(230, 126, 34);
+    private static final Color INPUT_TEXT_COLOR = new Color(33, 33, 33);
+    private static final Color LABEL_TEXT_COLOR = new Color(33, 33, 33);
 
     public static void main(String[] args) {
-        // Set look and feel to system default
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // Initialize MongoDB connection
         String connectionString = "mongodb+srv://shubhamdahal13:ZXCzxc789@cluster0.f3lfhnf.mongodb.net/studentInfo?retryWrites=true&w=majority&appName=Cluster0";
         dbService = new MongoDBService(connectionString);
 
-        // Create and show GUI
         SwingUtilities.invokeLater(() -> {
             createAndShowGUI();
         });
@@ -192,7 +192,6 @@ public class Main {
         panel.setBackground(BACKGROUND_COLOR);
         panel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        // Create table
         String[] columnNames = {"ID", "First Name", "Last Name", "Email"};
         studentTableModel = new DefaultTableModel(columnNames, 0) {
             @Override
@@ -202,7 +201,6 @@ public class Main {
         };
         studentTable = new JTable(studentTableModel);
         
-        // Style the table
         studentTable.setRowHeight(35);
         studentTable.setFont(new Font("Arial", Font.PLAIN, 14));
         studentTable.setSelectionBackground(SECONDARY_COLOR);
@@ -211,7 +209,6 @@ public class Main {
         studentTable.setBackground(Color.WHITE);
         studentTable.setForeground(new Color(33, 33, 33));
         
-        // Style the table header
         JTableHeader header = studentTable.getTableHeader();
         header.setBackground(PRIMARY_COLOR);
         header.setForeground(TEXT_COLOR);
@@ -219,7 +216,6 @@ public class Main {
         header.setPreferredSize(new Dimension(header.getPreferredSize().width, 40));
         header.setBorder(null);
 
-        // Add table to scroll pane with modern styling
         JScrollPane scrollPane = new JScrollPane(studentTable);
         scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
         scrollPane.getViewport().setBackground(Color.WHITE);
@@ -314,6 +310,8 @@ public class Main {
     private static JTextField createStyledTextField(String text) {
         JTextField field = new JTextField(text, 20);
         field.setFont(new Font("Arial", Font.PLAIN, 14));
+        field.setForeground(INPUT_TEXT_COLOR);
+        field.setBackground(Color.WHITE);
         field.setBorder(new MatteBorder(1, 1, 1, 1, SECONDARY_COLOR));
         return field;
     }
@@ -324,7 +322,7 @@ public class Main {
         gbc.gridy = row;
         JLabel label = new JLabel(labelText);
         label.setFont(new Font("Arial", Font.BOLD, 14));
-        label.setForeground(TEXT_COLOR);
+        label.setForeground(LABEL_TEXT_COLOR);
         panel.add(label, gbc);
 
         gbc.gridx = 1;
@@ -336,11 +334,11 @@ public class Main {
     private static JButton createStyledButton(String text) {
         JButton button = new JButton(text);
         button.setFont(new Font("Arial", Font.BOLD, 14));
-        button.setForeground(new Color(255, 255, 255)); // Pure white for better contrast
+        button.setForeground(Color.WHITE);
         button.setBackground(PRIMARY_COLOR);
         button.setFocusPainted(false);
         button.setBorder(new EmptyBorder(10, 20, 10, 20));
-        button.setOpaque(true); // Make sure the background is painted
+        button.setOpaque(true);
         
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {

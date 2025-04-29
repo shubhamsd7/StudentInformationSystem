@@ -16,7 +16,6 @@ public class Attendance {
         this.studentId = studentId;
     }
 
-    // Getters and Setters
     public String getId() {
         return id;
     }

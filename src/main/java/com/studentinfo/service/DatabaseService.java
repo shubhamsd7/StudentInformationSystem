@@ -1,10 +1,12 @@
 package com.studentinfo.service;
 
-import com.studentinfo.model.Student;
-import com.studentinfo.model.Grade;
-import com.studentinfo.model.Attendance;
 import java.util.List;
 
+import com.studentinfo.model.Attendance;
+import com.studentinfo.model.Grade;
+import com.studentinfo.model.Student;
+
+// Interface defining all database operations for the student information system
 public interface DatabaseService {
     // Student operations
     void createStudent(Student student);

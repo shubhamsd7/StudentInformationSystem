@@ -1,18 +1,22 @@
 package com.studentinfo.service;
 
-import com.mongodb.client.*;
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Updates;
-import com.studentinfo.exception.StudentInfoException;
-import com.studentinfo.model.Student;
-import com.studentinfo.model.Grade;
-import com.studentinfo.model.Attendance;
-import org.bson.Document;
-import org.bson.types.ObjectId;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.Document;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
+import com.studentinfo.exception.StudentInfoException;
+import com.studentinfo.model.Attendance;
+import com.studentinfo.model.Grade;
+import com.studentinfo.model.Student;
+
+// Main service class handling all MongoDB operations for student information system
 public class MongoDBService implements DatabaseService {
     private final MongoClient mongoClient;
     private final MongoDatabase database;
@@ -59,7 +63,6 @@ public class MongoDBService implements DatabaseService {
     @Override
     public void deleteStudent(String studentId) {
         studentsCollection.deleteOne(Filters.eq("_id", studentId));
-        // Also delete associated grades and attendance
         gradesCollection.deleteMany(Filters.eq("studentId", studentId));
         attendanceCollection.deleteMany(Filters.eq("studentId", studentId));
     }

@@ -21,7 +21,6 @@ public class Student implements Comparable<Student> {
         this.attendanceRecords = new ArrayList<>();
     }
 
-    // Getters and Setters
     public String getId() {
         return id;
     }
