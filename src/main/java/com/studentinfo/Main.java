@@ -46,10 +46,10 @@ public class Main {
     private static DefaultTableModel studentTableModel;
     
     // Color scheme
-    private static final Color PRIMARY_COLOR = new Color(41, 128, 185);
-    private static final Color SECONDARY_COLOR = new Color(52, 152, 219);
-    private static final Color BACKGROUND_COLOR = new Color(236, 240, 241);
-    private static final Color TEXT_COLOR = new Color(44, 62, 80);
+    private static final Color PRIMARY_COLOR = new Color(0, 32, 91); // Navy blue
+    private static final Color SECONDARY_COLOR = new Color(0, 48, 135); // Lighter navy blue
+    private static final Color BACKGROUND_COLOR = new Color(240, 240, 245); // Light gray-blue
+    private static final Color TEXT_COLOR = new Color(255, 255, 255); // White
     private static final Color ACCENT_COLOR = new Color(230, 126, 34);
 
     public static void main(String[] args) {
@@ -122,6 +122,7 @@ public class Main {
     private static JMenuBar createStyledMenuBar() {
         JMenuBar menuBar = new JMenuBar();
         menuBar.setBackground(PRIMARY_COLOR);
+        menuBar.setBorder(null); // Remove border
 
         // Student menu
         JMenu studentMenu = createStyledMenu("Students");
@@ -172,7 +173,7 @@ public class Main {
 
     private static JMenu createStyledMenu(String text) {
         JMenu menu = new JMenu(text);
-        menu.setForeground(Color.WHITE);
+        menu.setForeground(TEXT_COLOR);
         menu.setFont(new Font("Arial", Font.BOLD, 14));
         return menu;
     }
@@ -180,7 +181,9 @@ public class Main {
     private static JMenuItem createStyledMenuItem(String text, String icon) {
         JMenuItem menuItem = new JMenuItem(icon + " " + text);
         menuItem.setFont(new Font("Arial", Font.PLAIN, 14));
-        menuItem.setForeground(TEXT_COLOR);
+        menuItem.setForeground(PRIMARY_COLOR);
+        menuItem.setBackground(Color.WHITE);
+        menuItem.setOpaque(true);
         return menuItem;
     }
 
@@ -200,22 +203,26 @@ public class Main {
         studentTable = new JTable(studentTableModel);
         
         // Style the table
-        studentTable.setRowHeight(30);
+        studentTable.setRowHeight(35);
         studentTable.setFont(new Font("Arial", Font.PLAIN, 14));
         studentTable.setSelectionBackground(SECONDARY_COLOR);
-        studentTable.setSelectionForeground(Color.WHITE);
+        studentTable.setSelectionForeground(TEXT_COLOR);
         studentTable.setGridColor(new Color(200, 200, 200));
+        studentTable.setBackground(Color.WHITE);
+        studentTable.setForeground(new Color(33, 33, 33));
         
         // Style the table header
         JTableHeader header = studentTable.getTableHeader();
         header.setBackground(PRIMARY_COLOR);
-        header.setForeground(Color.WHITE);
+        header.setForeground(TEXT_COLOR);
         header.setFont(new Font("Arial", Font.BOLD, 14));
         header.setPreferredSize(new Dimension(header.getPreferredSize().width, 40));
+        header.setBorder(null);
 
         // Add table to scroll pane with modern styling
         JScrollPane scrollPane = new JScrollPane(studentTable);
         scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
+        scrollPane.getViewport().setBackground(Color.WHITE);
         panel.add(scrollPane, BorderLayout.CENTER);
 
         return panel;
@@ -224,14 +231,8 @@ public class Main {
     private static JPanel createStatusBar() {
         JPanel statusBar = new JPanel(new BorderLayout());
         statusBar.setBackground(PRIMARY_COLOR);
-        statusBar.setPreferredSize(new Dimension(0, 30));
-        statusBar.setBorder(new EmptyBorder(5, 10, 5, 10));
-
-        JLabel statusLabel = new JLabel("Ready");
-        statusLabel.setForeground(Color.WHITE);
-        statusLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-        statusBar.add(statusLabel, BorderLayout.WEST);
-
+        statusBar.setPreferredSize(new Dimension(0, 5)); // Make it very thin, just for visual separation
+        statusBar.setBorder(null);
         return statusBar;
     }
 
