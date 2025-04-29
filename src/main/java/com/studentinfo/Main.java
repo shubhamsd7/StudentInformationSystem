@@ -100,6 +100,9 @@ public class Main {
         mainFrame.add(mainPanel);
         mainFrame.setLocationRelativeTo(null);
         mainFrame.setVisible(true);
+
+        // Load existing students
+        refreshStudentTable();
     }
 
     private static JPanel createHeaderPanel() {
@@ -245,8 +248,22 @@ public class Main {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(5, 5, 5, 5);
 
+        // Get the next available ID
+        List<Student> students = dbService.getAllStudents();
+        int maxId = 0;
+        for (Student student : students) {
+            try {
+                int id = Integer.parseInt(student.getId());
+                maxId = Math.max(maxId, id);
+            } catch (NumberFormatException e) {
+                // Skip non-numeric IDs
+            }
+        }
+        String nextId = String.valueOf(maxId + 1);
+
         // Create styled text fields
-        JTextField idField = createStyledTextField(UUID.randomUUID().toString());
+        JTextField idField = createStyledTextField(nextId);
+        idField.setEditable(false); // Make ID field read-only
         JTextField firstNameField = createStyledTextField("");
         JTextField lastNameField = createStyledTextField("");
         JTextField emailField = createStyledTextField("");
@@ -318,10 +335,11 @@ public class Main {
     private static JButton createStyledButton(String text) {
         JButton button = new JButton(text);
         button.setFont(new Font("Arial", Font.BOLD, 14));
-        button.setForeground(Color.WHITE);
+        button.setForeground(new Color(255, 255, 255)); // Pure white for better contrast
         button.setBackground(PRIMARY_COLOR);
         button.setFocusPainted(false);
         button.setBorder(new EmptyBorder(10, 20, 10, 20));
+        button.setOpaque(true); // Make sure the background is painted
         
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
